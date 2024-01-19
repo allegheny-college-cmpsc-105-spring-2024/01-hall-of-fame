@@ -1,0 +1,74 @@
+setup: |
+  echo "Done installing project dependencies!"
+---
+
+# Reminder for ^^^:
+# All commands executed in the setup block are done in a
+# one-by-one fashion from the current working directory. This means
+# that there is no history associated with running the commands and
+# thus multiple commands must be run in a single chain.
+
+# perform checks on a file
+- README.md:
+    - description: Ensure that the README.md file exists
+      check: ConfirmFileExists
+    - description: Complete all TODOs, remove the TODO markers in README.md
+      check: MatchFileFragment
+      options:
+        fragment: TODO
+        count: 0
+        exact: true
+    - description: Delete the original instructions in the README.md
+      check: MatchFileFragment
+      options:
+        fragment: This blog post is meant to be informal, but presentable.
+        count: 0
+        exact: true
+    - description: Delete the original instructions in the README.md
+      check: MatchFileFragment
+      options:
+        fragment: In 1-3 sentences, write why you are interested in the topic of Data Exploration.
+        count: 0
+        exact: true
+    - description: Use correct filename for good data graphic in README.md
+      check: MatchFileFragment
+      options:
+        fragment: ./assets/images/good_data_graphic_example.
+        count: 1
+        exact: false
+    - description: Use correct filename for good data graphic in README.md
+      check: MatchFileFragment
+      options:
+        fragment: ./assets/images/bad_data_graphic_example.
+        count: 1
+        exact: false
+    - description: Delete the original instructions in the README.md
+      check: MatchFileFragment
+      options:
+        fragment: (except the end can be jpg, or png, etc).
+        count: 0
+        exact: true
+    - description: Delete the original instructions in the README.md
+      check: MatchFileFragment
+      options:
+        fragment:  Don't hesitate to post questions on Discord (part of participation)
+        count: 0
+        exact: true
+    - description: Delete the original image in the README.md
+      check: MatchFileFragment
+      options:
+        fragment: (./assets/images/magnifying-glass-logo.jpeg)
+        count: 0
+        exact: true 
+    - description: Confirm that the README.md file has at least 5 markdown headings
+      check: CountMarkdownTags
+      options:
+        tag: heading
+        count: 5
+        exact: false
+
+  # count number of commits in the GitHub repository
+- description: Have at least a specific minimum of commits in repository
+  check: CountCommits
+  options:
+    count: 5
